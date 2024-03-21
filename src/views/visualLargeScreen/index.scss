@@ -1,6 +1,6 @@
 .visualLargeScreen {
     width: 100vw;
-    height: 100vh;
+    height: 99.9vh;
     background: linear-gradient(180deg, rgba(34, 52, 127, 1) 0%, rgba(9, 31, 119, 1) 100%);
     display: flex;
     padding: 0px 10px;
@@ -180,7 +180,7 @@
 
             .rateRingInfo {
                 width: 100%;
-                height: 37%;
+                height: 34%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -193,7 +193,7 @@
 
                     .item {
                         width: 25%;
-                        height: 70%;
+                        height: 82%;
                         background-image: url(https://img.js.design/assets/img/64db2681c1f4a1f251392e0a.png);
                         background-size: cover;
                         background-position: center;
@@ -208,14 +208,14 @@
                             color: #c5fffe;
                             position: absolute;
                             top: 1px;
-                            font-size: 18px;
+                            font-size: 16px;
                         }
 
                         .item_title {
                             color: #fff;
                             position: absolute;
                             top: 50%;
-                            font-size: 14px;
+                            font-size: 13px;
 
                         }
                     }
@@ -569,7 +569,7 @@
 
             .tabulation {
                 width: 90%;
-                height: 65%;
+                height: calc(100% - 40%);
                 margin: 0 auto;
                 margin-top: 15px;
                 overflow-y: auto;
