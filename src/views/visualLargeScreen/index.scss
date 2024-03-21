@@ -3,6 +3,7 @@
     height: 100vh;
     background: linear-gradient(180deg, rgba(34, 52, 127, 1) 0%, rgba(9, 31, 119, 1) 100%);
     display: flex;
+    padding: 0px 10px;
 
 
 
@@ -84,7 +85,7 @@
     }
 
     .visualLargeScreen_left {
-        padding-left: 10px;
+        /* padding-left: 10px; */
         padding-top: 10px;
         padding-bottom: 10px;
         width: 25%;
@@ -207,13 +208,14 @@
                             color: #c5fffe;
                             position: absolute;
                             top: 1px;
-                            font-size: 19px;
+                            font-size: 18px;
                         }
 
                         .item_title {
                             color: #fff;
                             position: absolute;
                             top: 50%;
+                            font-size: 14px;
 
                         }
                     }
@@ -328,7 +330,7 @@
                 outline: none;
                 background: rgba(24, 57, 190, 0.5);
                 width: 110px;
-                height: 40px;
+                height: 38px;
                 border: none;
                 display: flex;
                 align-items: center;
@@ -357,7 +359,7 @@
 
     .visualLargeScreen_right {
         width: 25%;
-        padding-right: 10px;
+        /* padding-right: 10px; */
         padding-top: 48px;
         padding-bottom: 10px;
         background-image: url(../../assets/visualLargeScreen/背景.png);
@@ -438,8 +440,8 @@
                         align-items: center;
 
                         .drop {
-                            width: 14px;
-                            height: 14px;
+                            width: 10px;
+                            height: 10px;
                             border-radius: 50%;
                             background-color: rgba(236, 54, 54, 1);
                             display: inline-block;
@@ -463,7 +465,8 @@
 
                         .text {
                             color: rgba(197, 255, 254, 1);
-                            margin-left: 10px;
+                            margin-left: 7px;
+                            font-size: 13px;
                         }
                     }
                 }
@@ -591,7 +594,7 @@
                 }
 
                 .tabulation_ul {
-                    padding-left: 11%;
+                    padding-left: 9%;
 
                     .ul_li {
                         list-style: none;
@@ -601,15 +604,16 @@
                         .li_date {
                             color: rgba(197, 255, 254, 1);
                             position: relative;
+                            font-size: 13px;
 
                             &::before {
                                 position: absolute;
                                 content: '';
-                                width: 10px;
-                                height: 10px;
+                                width: 8px;
+                                height: 8px;
                                 border-radius: 50%;
                                 background-color: rgba(197, 255, 254, 1);
-                                left: -8%;
+                                left: -6%;
                                 top: 50%;
                                 transform: translateY(-50%);
                                 box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.5);
@@ -621,6 +625,7 @@
 
                         .li_title {
                             color: rgba(255, 179, 0, 1);
+                            font-size: 13px;
 
                         }
                     }

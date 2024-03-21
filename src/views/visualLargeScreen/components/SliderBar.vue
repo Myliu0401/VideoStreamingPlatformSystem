@@ -113,6 +113,7 @@ export default {
         width: 50px;
         display: flex;
         justify-content: flex-end;
+        font-size: 13px;
     }
 
     .text1{
@@ -121,6 +122,7 @@ export default {
         justify-content: flex-end;
         width: 30px;
         justify-content: flex-start;
+        font-size: 14px;
     }
 
 	.barBox {
