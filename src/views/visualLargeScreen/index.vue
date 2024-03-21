@@ -293,6 +293,7 @@ export default {
 			const option = {
 				grid: {
 					height: '60%',
+					bottom: '15%',
 				},
 
 				xAxis: {
@@ -448,7 +449,7 @@ export default {
 			const myChart = window.echarts.init(this.$refs.rateRingChart);
 			const option = {
 				legend: {
-					right: '10%', // 图例放置在右边
+					right: '5%', // 图例放置在右边
 					top: 'center', // 垂直居中
 					orient: 'vertical', // 设置图例纵向排列
 					icon: 'circle',
@@ -456,8 +457,7 @@ export default {
 						color: '#C5FFFE', // 设置字体颜色
 					},
 				},
-				/* background: url(https://img.js.design/assets/img/64db2681c1f4a1f251392e0a.png);
-				 */
+				
 				series: [
 					{
 						name: 'Access From',

@@ -91,6 +91,7 @@
         display: flex;
         flex-direction: column;
         z-index: 2;
+        height: 100%;
 
         .exit {
             width: 100px;
@@ -134,7 +135,7 @@
 
         .left_bottom {
             margin-top: 20px;
-            flex-grow: 1;
+            height: 58%;
             width: 100%;
             padding: 10px;
             box-shadow: inset 0px 0px 4px 2px rgba(255, 255, 255, 0.5), 0px 0px 4px 1px rgb(0 255 251);
@@ -178,15 +179,20 @@
 
             .rateRingInfo {
                 width: 100%;
+                height: 37%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
 
                 .rateRingInfoBox {
                     width: 100%;
                     display: flex;
                     justify-content: space-around;
+                    height: 50%;
 
                     .item {
-                        width: 80px;
-                        height: 80px;
+                        width: 25%;
+                        height: 70%;
                         background-image: url(https://img.js.design/assets/img/64db2681c1f4a1f251392e0a.png);
                         background-size: cover;
                         background-position: center;
@@ -221,6 +227,7 @@
         position: relative;
         padding-top: 10%;
         z-index: 2;
+        height: 100%;
 
         .contentTitleBox {
             width: 110%;
@@ -315,7 +322,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 30px;
+            height: 12%;
 
             .button {
                 outline: none;
@@ -361,6 +368,7 @@
         display: flex;
         flex-direction: column;
         z-index: 2;
+        height: 100%;
 
         .right_top {
             width: 100%;
@@ -375,12 +383,12 @@
             .contentBox {
                 display: flex;
                 width: 100%;
-
-                position: absolute;
+                height: 60%;
+                
 
                 .contentBox_content {
-                    width: 15vw;
-                    height: 17vw;
+                    width: 60%;
+                    height: 100%;
                     border-radius: 50%;
                     background-repeat: no-repeat;
                     background-position: center;
@@ -418,10 +426,12 @@
                 .contentBox_info {
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
-                    position: absolute;
-                    right: 20px;
-                    bottom: 15%;
+                    justify-content: flex-end;
+                    padding-bottom: 10%;
+                    
+                    
+                    width: 40%;
+                    height: 100%;
 
                     .item {
                         display: flex;
@@ -461,12 +471,13 @@
 
 
             .regulatoryRegion {
-                position: absolute;
-                bottom: 4%;
+               
                 width: 90%;
-                left: 50%;
-                transform: translateX(-50%);
-
+                margin: 0 auto;
+                height: 30%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
 
                 .sliderBar {
                     width: 100%;
@@ -476,7 +487,7 @@
 
 
         .right_bottom {
-            flex-grow: 1;
+            height: 55%;
             padding: 10px;
             box-shadow: inset 0px 0px 4px 2px rgba(255, 255, 255, 0.5), 0px 0px 4px 1px rgb(0 255 251);
             position: relative;
@@ -554,8 +565,8 @@
 
 
             .tabulation {
-                width: 87%;
-                height: 62%;
+                width: 90%;
+                height: 65%;
                 margin: 0 auto;
                 margin-top: 15px;
                 overflow-y: auto;
@@ -580,7 +591,7 @@
                 }
 
                 .tabulation_ul {
-                    padding-left: 6%;
+                    padding-left: 11%;
 
                     .ul_li {
                         list-style: none;
@@ -598,7 +609,7 @@
                                 height: 10px;
                                 border-radius: 50%;
                                 background-color: rgba(197, 255, 254, 1);
-                                left: -5%;
+                                left: -8%;
                                 top: 50%;
                                 transform: translateY(-50%);
                                 box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.5);
@@ -648,8 +659,7 @@
 
                     .contentBox_content {
 
-                        width: 15vw;
-                        height: 14vw;
+                      
                     }
 
                     .contentBox_info {}
