@@ -41,6 +41,15 @@ const dynamicRoutes = [
 			isKeepAlive: true
 		},
 		children: []
+	},
+	{
+		path: '/monitoringLargeScreen',
+		name: 'monitoringLargeScreen',
+		component: 'monitoringLargeScreen',
+		meta: {
+			isKeepAlive: true
+		},
+		children: []
 	}
 ];
 
