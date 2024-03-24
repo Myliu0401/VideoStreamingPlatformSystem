@@ -1,15 +1,19 @@
 <template>
     <div class="monitoringLargeScreen">
         <div class="monitoringLargeScreen_titleBox">
-            <ul class="ulBox">
-                <li class="li active"><span>首页</span></li>
-                <li class="li"><span>实时监控</span></li>
-                <li class="li"><span>设备列表</span></li>
+            <ul class="ulBox" @click="switchPages">
+                <li class="li" :class="{ active: activePage === 'activeHome' }" 
+                data-type="activeHome"><span data-type="activeHome">首页</span></li>
+                <li class="li" :class="{ active: activePage === 'realTimeMonitoring' }" 
+                data-type="realTimeMonitoring"><span data-type="realTimeMonitoring">实时监控</span></li>
+                <li class="li" :class="{ active: activePage === 'deviceList' }" 
+                data-type="deviceList"><span data-type="deviceList">设备列表</span></li>
             </ul>
         </div>
 
         <div class="monitoringLargeScreen_page">
-            <DeviceList />
+            <DeviceList v-if="activePage ===  'deviceList'" />
+            <RealTimeMonitoringVue v-else-if="activePage === 'realTimeMonitoring'" />
         </div>
 
 
@@ -26,13 +30,29 @@
 
 <script>
 import DeviceList from './pages/deviceList.vue'
+import RealTimeMonitoringVue from './pages/realTimeMonitoring.vue'
 export default {
     components: {
-        DeviceList
+        DeviceList,
+        RealTimeMonitoringVue
     },
     data(){
-        return {
+        return { 
+             activePage: 'realTimeMonitoring', // 选中的页面
+        }
+    },
 
+
+    methods: {
+
+        // 切换页面
+        switchPages(e){
+           const type = e.target.dataset.type;
+           if(type === this.activePage){
+             return;
+           };
+
+           this.activePage = type;
         }
     }
 }
