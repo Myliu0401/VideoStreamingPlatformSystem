@@ -2,6 +2,7 @@
 export default {
 	router: {
 		home: '首页',
+		workbench: '工作台',
 		system: '系统设置',
 		systemMenu: '菜单管理',
 		systemUser: '用户管理',

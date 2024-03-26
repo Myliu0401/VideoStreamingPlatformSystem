@@ -11,6 +11,10 @@ export default {
 		};
 	},
 
+	created() {
+		
+	},
+
 	methods: {
 		// 渲染百度地图
 		renderBaiduMap() {
@@ -39,7 +43,7 @@ export default {
 		},
 		// 销毁百度地图
 		destroyBaiduMaps() {
-            window.echarts.init(document.getElementById('ChinaMap')).dispose();
+			window.echarts.init(document.getElementById('ChinaMap')).dispose();
 			this.mapInstance && this.mapInstance.destroy();
 			this.mapInstance = null;
 		},

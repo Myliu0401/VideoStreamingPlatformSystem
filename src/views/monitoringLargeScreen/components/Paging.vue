@@ -141,6 +141,8 @@ export default {
         color: #4fbbb9;
         cursor: pointer;
         transition: all 0.3s;
+        position: relative;
+        top: 3px;
 
         &:hover {
             color: #60fffc;

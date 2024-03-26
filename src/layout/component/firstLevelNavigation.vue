@@ -80,7 +80,7 @@ export default {
 <style scoped lang="scss">
 .firstLevelNavigation {
 	width: 85px;
-	background-color: #a1bddb;
+	background-color: #cdcdcd;
 	.scrollbar {
         height: calc(100% - 67px);
 		.scrollbar_ul {

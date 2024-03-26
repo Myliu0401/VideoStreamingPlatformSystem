@@ -1,7 +1,7 @@
 <template>
 	<div class="visualLargeScreen">
 		<div class="visualLargeScreen_left">
-			<button class="exit">退出</button>
+			<button class="exit" @click="backReturn">退出</button>
 
 			<div class="left_top">
 				<div class="titleBox">
@@ -74,8 +74,8 @@
 			</div>
 
 			<div class="contentBox">
-				<BaiduMap v-show="currentlySelectedMap === 'baiduMap'" ref="baiduMap"/>
-				<EchartsMap v-show="currentlySelectedMap === 'echarts'" ref="echartsMap"/>
+				<BaiduMap v-show="currentlySelectedMap === 'baiduMap'" ref="baiduMap" />
+				<EchartsMap v-show="currentlySelectedMap === 'echarts'" ref="echartsMap" />
 				<GTDetails v-if="currentlySelectedMap === 'GTDetails'" />
 				<i v-if="isLoading" class="loading el-icon-loading"></i>
 			</div>
@@ -193,7 +193,7 @@ export default {
 		SliderBar,
 		BaiduMap,
 		EchartsMap,
-		GTDetails
+		GTDetails,
 	},
 
 	data() {
@@ -212,7 +212,6 @@ export default {
 				innerRadius: 0,
 				outerRadius: 0,
 			},
-
 
 			carouselChart: null, // 轮播图实例
 
@@ -253,20 +252,28 @@ export default {
 				},
 			], // 告警数据列表
 
-
 			contentTimerId: null,
 
 			isLoading: false, // 是否正在加载
 		};
 	},
 
+	created() {
+		document.documentElement.webkitRequestFullscreen(); // 进入大屏
+
+		document.addEventListener('fullscreenchange', this.largeScreen);
+	},
+
+	beforeDestroy(){
+		document.removeEventListener('fullscreenchange', this.largeScreen);
+	},
+
 	mounted() {
-		this.renderDeviceStatu(this.deviceStatus);
-
-		this.renderRateRingChart();
-
-		this.initCarouselChart();
-
+		setTimeout(() => {
+			this.renderDeviceStatu(this.deviceStatus);
+			this.renderRateRingChart();
+			this.initCarouselChart();
+		}, 500);
 	},
 
 	methods: {
@@ -453,7 +460,7 @@ export default {
 						color: '#C5FFFE', // 设置字体颜色
 					},
 				},
-				
+
 				series: [
 					{
 						name: 'Access From',
@@ -508,7 +515,6 @@ export default {
 			this.circularDiagram.outerRadius = diameter * 0.58 + 12;
 		},
 
-
 		// 初始化轮播图
 		initCarouselChart() {
 			this.carouselChart = new Swiper('.swiper', {
@@ -533,7 +539,7 @@ export default {
 		switchMaps(type) {
 			if (type === this.currentlySelectedMap) {
 				return;
-			};
+			}
 			this.$refs.baiduMap.destroyBaiduMaps(); // 卸载百度地图
 			this.$refs.echartsMap.uninstallingAnInstance(); // 卸载echarts地图
 			this.isLoading = true;
@@ -552,12 +558,25 @@ export default {
 			}
 		},
 
-		
+		// 切换进入 GT详情
+		enterGT(e) {
+			this.currentlySelectedMap = 'GTDetails';
+		},
 
-		
-        // 切换进入 GT详情
-		enterGT(e){
-			 this.currentlySelectedMap = 'GTDetails';
+
+		backReturn(){
+			document.exitFullscreen();
+			this.$router.replace('/home')
+		},
+
+
+		// 进出大屏
+		largeScreen(){
+			if (document.fullscreenElement) {
+				console.log('进入全屏模式');
+			} else {
+				console.log('退出全屏模式');
+			}
 		}
 	},
 };

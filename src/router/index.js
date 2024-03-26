@@ -28,7 +28,23 @@ const dynamicRoutes = [
 		meta: {
 			isKeepAlive: true,
 		},
-		children: [],
+		children: [
+			{
+				path: '/home',
+				name: "home",
+				component: "workbench",
+				meta: {
+					title: "message.router.workbench",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin", "common"],
+					icon: "el-icon-odometer"
+				}
+			}
+		],
 		pathToRegexpOptions: { strict: true },
 		// 使用exact属性进行严格匹配
 		exact: true
@@ -221,27 +237,32 @@ export function dynamicRouter(routes) {
 // next({ ...to, replace: true }) 动态路由 addRoute 完毕后才放行，防止刷新时 NProgress 进度条加载2次
 // 文档地址：https://router.vuejs.org/zh/api/#router-addroutes
 export async function adminUser(router, to, next) {
+
+
 	resetRouter(); // 重置路由信息
 	try {
-		const res = await menuApi.getMenuAdmin(); // 获取后端动态路由菜单
+		//const res = await menuApi.getMenuAdmin(); // 获取后端动态路由菜单
 
 		store.dispatch('userInfos/setUserInfos'); // 设置用户信息
 
 		// 添加有权限的路由
-		store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
+		store.dispatch('routesList/setRoutesList', setFilterMenuFun(dynamicRoutes[0].children, store.state.userInfos.userInfos.roles));
 
-		dynamicRoutes[0].children = res.data; // 获取路由数据
+		//	dynamicRoutes[0].children = res.data; // 获取路由数据
 
 		const awaitRoute = await dynamicRouter(dynamicRoutes); // 递归路由配置
+
+		console.log(awaitRoute, '=============');
 
 		[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 			router.addRoute({ ...route }); // 添加路由规则
 		});
 
 
-		setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 
+		//setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 
+		setCacheTagsViewRoutes(JSON.parse(JSON.stringify(dynamicRoutes[0].children)));
 		next({ ...to, replace: true }); // 跳转路由
 
 
@@ -262,8 +283,8 @@ export function testUser(router, to, next) {
 			// 读取用户信息，获取对应权限进行判断
 			store.dispatch('userInfos/setUserInfos');
 			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
-			dynamicRoutes[0].children = res.data;
-			const awaitRoute = await dynamicRouter(dynamicRoutes);
+			//dynamicRoutes[0].children = res.data;
+			//const awaitRoute = await dynamicRouter(dynamicRoutes);
 			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 				router.addRoute({ ...route });
 			});

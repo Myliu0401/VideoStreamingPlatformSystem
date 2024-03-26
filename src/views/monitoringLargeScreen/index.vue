@@ -12,7 +12,8 @@
         </div>
 
         <div class="monitoringLargeScreen_page">
-            <DeviceList v-if="activePage ===  'deviceList'" />
+            <Home v-if="activePage === 'activeHome'" />
+            <DeviceList v-else-if="activePage ===  'deviceList'" />
             <RealTimeMonitoringVue v-else-if="activePage === 'realTimeMonitoring'" />
         </div>
 
@@ -31,14 +32,16 @@
 <script>
 import DeviceList from './pages/deviceList.vue'
 import RealTimeMonitoringVue from './pages/realTimeMonitoring.vue'
+import Home from './pages/home.vue'
 export default {
     components: {
         DeviceList,
-        RealTimeMonitoringVue
+        RealTimeMonitoringVue,
+        Home
     },
     data(){
         return { 
-             activePage: 'realTimeMonitoring', // 选中的页面
+             activePage: 'activeHome', // 选中的页面
         }
     },
 

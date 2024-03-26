@@ -9,12 +9,14 @@
 
 :root {
 	--prev-bg-menuBar: #545c64;
+	--prev-bg-menuBar1: #e7e7e7;
 	--prev-bg-menuBarColor: #eaeaea;
 	--prev-bg-topBar: #ffffff;
 	--prev-bg-topBarColor: #606266;
 	--prev-bg-columnsMenuBar: #545c64;
 	--prev-bg-columnsMenuBarColor: #e6e6e6;
 	--prev-bg-main-color: #f8f8f8;
+	--prev-bg-main1-color: #e5e5e5;
 	--prev-bg-color: #f5f7fa;
 	--prev-bg-white: #ffffff;
 	--prev-color-primary: #409eff;
@@ -50,7 +52,7 @@ body,
 	width: 100%;
 	height: 100%;
 	.layout-aside {
-		background: var(--prev-bg-menuBar);
+		background: var(--prev-bg-menuBar1);
 		box-shadow: 2px 0 6px rgb(0 21 41 / 1%);
 		height: inherit;
 		position: relative;

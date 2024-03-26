@@ -22,7 +22,6 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.getThemeConfig,'=======');
 		this.onLayoutResize();
 		window.addEventListener('resize', this.onLayoutResize);
 	},
