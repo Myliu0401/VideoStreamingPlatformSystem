@@ -10,7 +10,8 @@
 
     .selectionArea {
         width: 100%;
-        padding: 20px;
+        padding: 20px 40px;
+        padding-bottom: 0px;
 
         .el-range-editor {
             cursor: pointer;
@@ -36,7 +37,7 @@
 
         width: 100%;
         max-height: 75%;
-        padding: 0px 20px;
+        padding: 0px 40px;
 
 
         .el-table {
@@ -76,6 +77,7 @@
                     margin-top: 20px;
                     width: 210px;
                     height: 120px;
+                    margin-right: 20px;
 
                     .li_content{
                       height: 107px;
@@ -117,7 +119,7 @@
         display: flex;
         align-items: center;
         width: 100%;
-        padding: 0px 20px;
+        padding: 0px 40px;
         margin: 0 auto;
         margin-top: 15px;
         justify-content: space-between;
