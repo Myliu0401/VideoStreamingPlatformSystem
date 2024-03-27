@@ -10,7 +10,7 @@
         </div>
 
 
-        <div class="items">
+        <div class="items" v-for="num in 2" :key="num">
             <h4 class="title">设备数据</h4>
             <ul class="content">
                <li class="content_li">
@@ -26,7 +26,7 @@
 
                <li class="content_li">
                 <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/1.png"/>
+                    <img class="li_img" src="../../assets/workbench/2.png"/>
                 </div>
                 
                 <div class="li_div">
@@ -37,7 +37,7 @@
 
                <li class="content_li">
                 <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/1.png"/>
+                    <img class="li_img" src="../../assets/workbench/3.png"/>
                 </div>
                 
                 <div class="li_div">
@@ -48,7 +48,7 @@
 
                <li class="content_li">
                 <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/1.png"/>
+                    <img class="li_img" src="../../assets/workbench/4.png"/>
                 </div>
                 
                 <div class="li_div">

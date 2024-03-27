@@ -22,10 +22,12 @@
 
 
 <script>
+import { Local } from '@/utils/storage.js';
 export default {
 	data() {
 		return {
 			activeNavPath: this.$route.path,
+			clientWidth: window.document.body.clientWidth
 		};
 	},
 	computed: {
@@ -41,7 +43,6 @@ export default {
 	methods: {
 		// 修改方块位置
 		setBlockPosition() {
-			
 			const li = document.querySelector('.firstLevelNavigation .ul_li.active');
 			if (li) {
 				this.redundantCode(li);
@@ -51,13 +52,20 @@ export default {
 		// 切换首级导航
 		switchNavigation({ target }, item) {
 			if (this.activeNavPath.startsWith(item.path)) {
+			  item.children && item.children.length && this.onThemeConfigChange();
 				return;
-			}
+			};
 			target = target.tagName === 'LI' ? target : target.parentElement;
 			this.redundantCode(target);
 			this.activeNavPath = item.path;
-
             this.bus.$emit('topLevelNavigation', item.path);
+		    
+
+			if(!item.children || !item.children.length){
+				this.$router.replace(item.path);
+			}else {
+				this.onThemeConfigChange();
+			}
 		},
 
         // 冗余代码
@@ -65,12 +73,26 @@ export default {
             const block = this.$refs.block;
 			block.style.top = target.offsetTop + 'px';
 			block.style.height = target.offsetHeight + 'px';
-        }
+        },
+
+		// 点击菜单展开与收起
+		onThemeConfigChange() {
+			
+			this.$store.state.themeConfig.themeConfig.isCollapse = this.clientWidth < 1000 ? true : false;
+			
+			//this.$store.state.themeConfig.themeConfig.isCollapse = !this.$store.state.themeConfig.themeConfig.isCollapse;
+			this.setLocalThemeConfig();
+		},
+		// 存储布局配置
+		setLocalThemeConfig() {
+			Local.remove('themeConfigPrev');
+			Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
+		},
 	},
 	watch: {
 		// 监听路由变化
 		$route: function (to, from) {
-			this.setBlockPosition();
+			this.$nextTick(this.setBlockPosition)
 		},
 	},
 };
@@ -79,7 +101,7 @@ export default {
 
 <style scoped lang="scss">
 .firstLevelNavigation {
-	width: 85px;
+	min-width: 66px;
 	background-color: #cdcdcd;
 	.scrollbar {
         height: calc(100% - 67px);
@@ -100,6 +122,7 @@ export default {
 				transition: all 0.3s;
 				z-index: 2;
 				.icon {
+					font-size: 21px;
 				}
 				.title {
 					font-size: 12px;

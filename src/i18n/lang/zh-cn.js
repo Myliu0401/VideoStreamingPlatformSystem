@@ -3,6 +3,8 @@ export default {
 	router: {
 		home: '首页',
 		workbench: '工作台',
+		realTimeVideo: '实时视频',
+		imageManagement: '图片管理',
 		system: '系统设置',
 		systemMenu: '菜单管理',
 		systemUser: '用户管理',

@@ -43,6 +43,36 @@ const dynamicRoutes = [
 					roles: ["admin", "common"],
 					icon: "el-icon-odometer"
 				}
+			},
+			{
+				path: '/realTimeVideo',
+				name: "realTimeVideo",
+				component: "realTimeVideo",
+				meta: {
+					title: "message.router.realTimeVideo",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin", "common"],
+					icon: "el-icon-video-camera-solid"
+				}
+			},
+			{
+				path: '/imageManagement',
+				name: "imageManagement",
+				component: "imageManagement",
+				meta: {
+					title: "message.router.imageManagement",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin", "common"],
+					icon: "el-icon-picture"
+				}
 			}
 		],
 		pathToRegexpOptions: { strict: true },
