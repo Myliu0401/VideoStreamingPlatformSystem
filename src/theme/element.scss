@@ -109,7 +109,7 @@
 .el-submenu__title {
 	height: 50px !important;
 	line-height: 50px !important;
-	color: var(--prev-bg-menuBarColor) !important;
+	color:rgba(51, 51, 51, 1); /* var(--prev-bg-menuBarColor) !important; */
 	transition: none !important;
 }
 // horizontal 水平方向时
@@ -118,6 +118,9 @@
 	border-bottom: 3px solid !important;
 	border-bottom-color: var(--prev-color-primary) !important;
 	color: var(--prev-color-primary) !important;
+}
+.el-menu--inline  .el-menu-item.is-active{
+	background-color: rgba(143, 73, 222, 0.2) !important;
 }
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover,

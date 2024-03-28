@@ -121,6 +121,7 @@ export default {
 				cursor: pointer;
 				transition: all 0.3s;
 				z-index: 2;
+				color: rgba(51, 51, 51, 1);
 				.icon {
 					font-size: 21px;
 				}
@@ -143,7 +144,7 @@ export default {
 				position: absolute;
 				width: 96%;
 				left: 2%;
-				background-color: #11559c;
+				background-color: rgba(143, 73, 222, 0.5);
 				z-index: 1;
 				border-radius: 7px;
 				transition: all 0.3s;

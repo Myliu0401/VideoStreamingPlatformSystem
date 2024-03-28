@@ -3,9 +3,15 @@ import store from '../store';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { Session } from '@/utils/storage';
-import { PrevLoading } from '@/utils/loading.js';
-import { useMenuApi } from '@/api/menu';
+import {
+	Session
+} from '@/utils/storage';
+import {
+	PrevLoading
+} from '@/utils/loading.js';
+import {
+	useMenuApi
+} from '@/api/menu';
 
 const menuApi = useMenuApi();
 
@@ -19,8 +25,7 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter);
 
 // 定义动态路由
-const dynamicRoutes = [
-	{
+const dynamicRoutes = [{
 		path: '/',
 		name: '/',
 		component: 'layout/index',
@@ -28,8 +33,7 @@ const dynamicRoutes = [
 		meta: {
 			isKeepAlive: true,
 		},
-		children: [
-			{
+		children: [{
 				path: '/home',
 				name: "home",
 				component: "workbench",
@@ -41,7 +45,7 @@ const dynamicRoutes = [
 					isAffix: true,
 					isIframe: false,
 					roles: ["admin", "common"],
-					icon: "el-icon-odometer"
+					icon: "el-icon-s-platform"
 				}
 			},
 			{
@@ -56,7 +60,7 @@ const dynamicRoutes = [
 					isAffix: true,
 					isIframe: false,
 					roles: ["admin", "common"],
-					icon: "el-icon-video-camera-solid"
+					icon: "el-icon-s-ticket"
 				}
 			},
 			{
@@ -73,9 +77,88 @@ const dynamicRoutes = [
 					roles: ["admin", "common"],
 					icon: "el-icon-picture"
 				}
+			},
+			{
+				path: '/videoRecordingManagement',
+				name: "videoRecordingManagement",
+				component: "videoRecordingManagement",
+				meta: {
+					title: "message.router.videoRecordingManagement",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin", "common"],
+					icon: "el-icon-video-camera-solid"
+				}
+			},
+			{
+				path: '/deviceManagement',
+				name: "deviceManagement",
+				component: "layout/routerView/parent",
+				redirect: "/deviceManagement/routeManagement",
+				meta: {
+					title: "message.router.deviceManagement",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin", "common"],
+					icon: "el-icon-s-marketing"
+				},
+				children: [{
+						path: '/deviceManagement/routeManagement',
+						name: "routeManagement",
+						component: "deviceManagement/routeManagement",
+						meta: {
+							title: "message.router.routeManagement",
+							isLink: "",
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: true,
+							isIframe: false,
+							roles: ["admin", "common"],
+
+						},
+					},
+					{
+						path: '/deviceManagement/towerManagement',
+						name: "towerManagement",
+						component: "deviceManagement/towerManagement",
+						meta: {
+							title: "message.router.towerManagement",
+							isLink: "",
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: true,
+							isIframe: false,
+							roles: ["admin", "common"],
+
+						},
+					},
+					{
+						path: '/deviceManagement/deviceManagement',
+						name: "deviceManagement",
+						component: "deviceManagement/deviceManagement",
+						meta: {
+							title: "message.router.deviceManagement",
+							isLink: "",
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: true,
+							isIframe: false,
+							roles: ["admin", "common"],
+
+						},
+					}
+				]
 			}
 		],
-		pathToRegexpOptions: { strict: true },
+		pathToRegexpOptions: {
+			strict: true
+		},
 		// 使用exact属性进行严格匹配
 		exact: true
 	},
@@ -100,8 +183,7 @@ const dynamicRoutes = [
 ];
 
 // 定义静态路由
-const staticRoutes = [
-	{
+const staticRoutes = [{
 		path: '/login',
 		name: 'login',
 		component: () => import('@/views/login'),
@@ -132,7 +214,9 @@ const createRouter = () =>
 	new VueRouter({
 		routes: staticRoutes,
 		exact: true,
-		pathToRegexpOptions: { strict: true },
+		pathToRegexpOptions: {
+			strict: true
+		},
 		mode: 'history'
 	});
 
@@ -160,7 +244,9 @@ export function formatTwoStageRoutes(arr) {
 	const newArr = [];
 	const cacheList = [];
 	arr.forEach((v) => {
-		newArr.push({ ...v });
+		newArr.push({
+			...v
+		});
 		cacheList.push(v.name);
 		store.dispatch('keepAliveNames/setCacheKeepAlive', cacheList);
 	});
@@ -171,7 +257,9 @@ export function formatTwoStageRoutes(arr) {
 export function hasAuth(roles, route) {
 
 	if (route.meta && route.meta.roles) {
-		return roles.some((role) => { return route.meta.roles.includes(role) });
+		return roles.some((role) => {
+			return route.meta.roles.includes(role)
+		});
 	} else {
 		return true;
 	}
@@ -182,7 +270,9 @@ export function setFilterMenuFun(routes, role) {
 	const menu = [];
 
 	routes.forEach((route) => {
-		const item = { ...route };
+		const item = {
+			...route
+		};
 
 		// 判断配置中有没有包含该权限
 		if (hasAuth(role, item)) {
@@ -217,7 +307,10 @@ export function keepAliveSplice(to) {
 				v.components.default().then((components) => {
 					if (components.default.name === 'parent') {
 						to.matched.splice(k, 1);
-						router.push({ path: to.path, query: to.query });
+						router.push({
+							path: to.path,
+							query: to.query
+						});
 						keepAliveSplice(to);
 					}
 				});
@@ -284,8 +377,13 @@ export async function adminUser(router, to, next) {
 
 		console.log(awaitRoute, '=============');
 
-		[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
-			router.addRoute({ ...route }); // 添加路由规则
+		[...awaitRoute, {
+			path: '*',
+			redirect: '/404'
+		}].forEach((route) => {
+			router.addRoute({
+				...route
+			}); // 添加路由规则
 		});
 
 
@@ -293,7 +391,10 @@ export async function adminUser(router, to, next) {
 		//setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 
 		setCacheTagsViewRoutes(JSON.parse(JSON.stringify(dynamicRoutes[0].children)));
-		next({ ...to, replace: true }); // 跳转路由
+		next({
+			...to,
+			replace: true
+		}); // 跳转路由
 
 
 	} catch (err) {
@@ -315,13 +416,21 @@ export function testUser(router, to, next) {
 			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
 			//dynamicRoutes[0].children = res.data;
 			//const awaitRoute = await dynamicRouter(dynamicRoutes);
-			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
-				router.addRoute({ ...route });
+			[...awaitRoute, {
+				path: '*',
+				redirect: '/404'
+			}].forEach((route) => {
+				router.addRoute({
+					...route
+				});
 			});
 			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
-			next({ ...to, replace: true });
+			next({
+				...to,
+				replace: true
+			});
 		})
-		.catch(() => { });
+		.catch(() => {});
 }
 
 // 重置路由
@@ -346,7 +455,7 @@ export function getRouterList(router, to, next) {
 		return false;
 	} else if (Session.get('userInfo').userName === 'admin') { // 判断是否是管理员
 		adminUser(router, to, next);
-	} else if (Session.get('userInfo').userName === 'test') {  // 普通用户
+	} else if (Session.get('userInfo').userName === 'test') { // 普通用户
 		testUser(router, to, next);
 	}
 }
@@ -354,7 +463,9 @@ export function getRouterList(router, to, next) {
 // 路由加载前
 router.beforeEach((to, from, next) => {
 	keepAliveSplice(to);
-	NProgress.configure({ showSpinner: false });
+	NProgress.configure({
+		showSpinner: false
+	});
 	if (to.meta.title && to.path !== '/login') {
 		NProgress.start();
 	};
