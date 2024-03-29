@@ -45,9 +45,16 @@
 					</div>
 				</div>
 
+
 				<!-- 界面显示 -->
 				<el-divider content-position="left">{{ $t('message.layout.fourTitle') }}</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex">
+				<div class="layout-breadcrumb-seting-bar-flex" style="margin-bottom: 15px;">
+					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.topLevelNavigationOnTheSide') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-switch v-model="getThemeConfig.isTopLevelNavSide" :width="35" @change="setLocalThemeConfig"></el-switch>
+					</div>
+				</div>
+				<div class="layout-breadcrumb-seting-bar-flex ">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsShowLogo') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isShowLogo" :width="35" @change="setLocalThemeConfig"></el-switch>
@@ -111,7 +118,7 @@
 				</div>
 
 				<!-- 其它设置 -->
-				<el-divider content-position="left">{{ $t('message.layout.fiveTitle') }}</el-divider>
+				<!-- <el-divider content-position="left">{{ $t('message.layout.fiveTitle') }}</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveTagsStyle') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
@@ -147,13 +154,13 @@
 							<el-option label="垂直" value="columns-vertical"></el-option>
 						</el-select>
 					</div>
-				</div>
+				</div> -->
 
 				<!-- 布局切换 -->
-				<el-divider content-position="left">{{ $t('message.layout.sixTitle') }}</el-divider>
-				<div class="layout-drawer-content-flex">
+				<!-- <el-divider content-position="left">{{ $t('message.layout.sixTitle') }}</el-divider>
+				<div class="layout-drawer-content-flex"> -->
 					<!-- defaults 布局 -->
-					<div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
+					<!-- <div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
 						<section class="el-container el-circular" :class="{ 'drawer-layout-active': getThemeConfig.layout === 'defaults' }">
 							<aside class="el-aside" style="width: 20px"></aside>
 							<section class="el-container is-vertical">
@@ -166,9 +173,9 @@
 								<p class="layout-tips-txt">{{ $t('message.layout.sixDefaults') }}</p>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- classic 布局 -->
-					<div class="layout-drawer-content-item" @click="onSetLayout('classic')">
+					<!-- <div class="layout-drawer-content-item" @click="onSetLayout('classic')">
 						<section class="el-container is-vertical el-circular" :class="{ 'drawer-layout-active': getThemeConfig.layout === 'classic' }">
 							<header class="el-header" style="height: 10px"></header>
 							<section class="el-container">
@@ -183,9 +190,9 @@
 								<p class="layout-tips-txt">{{ $t('message.layout.sixClassic') }}</p>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- transverse 布局 -->
-					<div class="layout-drawer-content-item" @click="onSetLayout('transverse')">
+					<!-- <div class="layout-drawer-content-item" @click="onSetLayout('transverse')">
 						<section class="el-container is-vertical el-circular" :class="{ 'drawer-layout-active': getThemeConfig.layout === 'transverse' }">
 							<header class="el-header" style="height: 10px"></header>
 							<section class="el-container">
@@ -199,9 +206,9 @@
 								<p class="layout-tips-txt">{{ $t('message.layout.sixTransverse') }}</p>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- columns 布局 -->
-					<div class="layout-drawer-content-item" @click="onSetLayout('columns')">
+					<!-- <div class="layout-drawer-content-item" @click="onSetLayout('columns')">
 						<section class="el-container el-circular" :class="{ 'drawer-layout-active': getThemeConfig.layout === 'columns' }">
 							<aside class="el-aside-dark" style="width: 10px"></aside>
 							<aside class="el-aside" style="width: 20px"></aside>
@@ -215,8 +222,8 @@
 								<p class="layout-tips-txt">{{ $t('message.layout.sixColumns') }}</p>
 							</div>
 						</div>
-					</div>
-				</div>
+					</div> -->
+				<!-- </div> -->
 				<div class="copy-config">
 					<el-alert :title="$t('message.layout.tipText')" type="warning" :closable="false"> </el-alert>
 					<el-button
@@ -287,6 +294,7 @@ export default {
 			if (this.getThemeConfig.isIsDark) body.setAttribute('data-theme', 'dark');
 			else body.setAttribute('data-theme', '');
 			this.setLocalThemeConfig();
+
 		},
 		// 初始化：刷新页面时，设置了值，直接取缓存中的值进行初始化
 		initLayoutConfig() {

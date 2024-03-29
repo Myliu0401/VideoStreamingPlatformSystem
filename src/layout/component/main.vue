@@ -91,3 +91,13 @@ export default {
 	},
 };
 </script>
+
+
+<style lang="scss" scoped>
+  .layout-footer{
+	  position: absolute;
+	  bottom: 0px;
+	  left: 50%;
+	  transform: translateX(-50%);
+  }
+</style>

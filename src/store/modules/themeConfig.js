@@ -46,6 +46,8 @@ const themeConfigModule = {
 			// 是否开启固定 Header
 			isFixedHeader: false,
 
+			isTopLevelNavSide: false, // 是否开启侧边顶级导航
+
 			/**
 			 * 界面显示
 			 */

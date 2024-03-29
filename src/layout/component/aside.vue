@@ -62,6 +62,15 @@ export default {
 			return this.$store.state.themeConfig.themeConfig;
 		},
 	},
+	watch: {
+        '$store.state.themeConfig.themeConfig.isTopLevelNavSide'(newVal){
+             if(newVal){
+				this.topLevelNavigation(this.$route.path);
+			 }else{
+				this.setFilterRoutes();
+			 }
+		}
+	},
 	created() {
 		this.initMenuFixed(document.body.clientWidth); //初始化菜单固定
 		this.setFilterRoutes();
@@ -89,6 +98,9 @@ export default {
 			}
 			this.menuList = this.filterRoutesFun(this.$store.state.routesList.routesList);
 
+			if(!this.$store.state.themeConfig.themeConfig.isTopLevelNavSide){
+               return
+			}
 			this.menuList = this.menuList.filter((item) => {
 				return this.$route.path.startsWith(item.path);
 			});
@@ -109,13 +121,17 @@ export default {
 		},
 
 		topLevelNavigation(path) {
+
+			if(!this.$store.state.themeConfig.themeConfig.isTopLevelNavSide){
+               return
+			}
+
 			this.menuList = this.filterRoutesFun(this.$store.state.routesList.routesList);
 
 			this.menuList = this.menuList.filter((item) => {
 				return path.startsWith(item.path);
 			});
 
-			console.log(this.menuList)
 		},
 	},
 	// 页面销毁时

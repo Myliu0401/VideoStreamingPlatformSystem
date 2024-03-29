@@ -4,7 +4,7 @@
 			<div class="login-left">
 				<div class="login-time">{{ time.txt }}</div>
 				<div class="login-left-box">
-					<div>
+					<!-- <div>
 						<div class="logo">{{ getThemeConfig.globalViceTitle }}</div>
 						<h2 class="title">{{ getThemeConfig.globalViceDes }}</h2>
 						<div class="msg">
@@ -14,7 +14,7 @@
 							</div>
 							<div class="msg-txt">{{ quotations.content }}</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="login-right">
@@ -69,10 +69,10 @@
 							</el-button>
 						</el-form-item>
 					</el-form>
-					<div class="login-menu">
+					<!-- <div class="login-menu">
 						<a href="javascript:;">{{ $t('message.login.link.one1') }}</a>
 						<a href="javascript:;">{{ $t('message.login.link.one2') }}</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>

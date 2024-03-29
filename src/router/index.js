@@ -217,7 +217,7 @@ const createRouter = () =>
 		pathToRegexpOptions: {
 			strict: true
 		},
-		mode: 'history'
+		mode: 'hash'
 	});
 
 // 创建路由

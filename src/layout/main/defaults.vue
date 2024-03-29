@@ -1,6 +1,6 @@
 <template>
 	<el-container class="layout-container">
-	    <FirstLevelNavigation/>
+	    <FirstLevelNavigation v-if="isTopLevelNavSide"/>
 		<Asides />
 		<el-container class="flex-center layout-backtop">
 			<Headers v-if="isFixedHeader" />
@@ -29,6 +29,11 @@ export default {
 		isFixedHeader() {
 			return this.$store.state.themeConfig.themeConfig.isFixedHeader;
 		},
+
+		// 是否开启侧边顶级导航
+		isTopLevelNavSide(){
+            return this.$store.state.themeConfig.themeConfig.isTopLevelNavSide;
+		}
 	},
 	watch: {
 		// 监听路由的变化
