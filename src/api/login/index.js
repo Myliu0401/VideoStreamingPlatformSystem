@@ -22,4 +22,25 @@ export function useLoginApi() {
 			});
 		},
 	};
-}
+};
+
+
+// 登录
+export function login(params = {}){
+
+	console.log(params, '=')
+
+    return request({
+		url: '/api/sysAuth/login',
+		method: 'post',
+		data: params,
+	});
+};
+
+// 获取登录验证码
+export async function getLoginVerificationCode(){
+	return request({
+		url: '/api/sysAuth/captcha',
+		method: 'get',
+	})
+};

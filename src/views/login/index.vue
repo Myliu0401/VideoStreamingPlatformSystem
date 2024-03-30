@@ -26,7 +26,7 @@
 								type="text"
 								:placeholder="$t('message.login.placeholder1')"
 								prefix-icon="el-icon-user"
-								v-model="ruleForm.userName"
+								v-model="ruleForm.account"
 								clearable
 								autocomplete="off"
 							>
@@ -58,7 +58,13 @@
 								</div>
 								<div class="el-col el-col-8">
 									<div class="login-code">
-										<span class="login-code-img">1234</span>
+										<span @click="getVerificationCode" class="login-code-img" style="overflow: hidden" v-loading="verificationInfo.loading">
+											<img
+												style="width: 100%; height: 100%; position: relative; left: -5px"
+												:src="'data:image/png;base64,' + verificationInfo.src"
+												alt="验证码"
+											/>
+										</span>
 									</div>
 								</div>
 							</div>
@@ -87,6 +93,11 @@ import { Session } from '@/utils/storage';
 import { formatDate, formatAxis } from '@/utils/formatTime';
 import { PrevLoading } from '@/utils/loading.js';
 import { quotationsList } from './mock';
+import { login, getLoginVerificationCode } from '@/api/login';
+/* import { sm2 } from 'sm-crypto'; */
+import { sm2 } from 'miniprogram-sm-crypto';
+window.ab = sm2
+import md5 from 'js-md5';
 export default {
 	name: 'login',
 	data() {
@@ -95,16 +106,25 @@ export default {
 			quotations: {},
 			isView: false,
 			submit: {
-				loading: false,
+				loading: false, // 是否提交中
 			},
+
+			// 账号信息
 			ruleForm: {
-				userName: 'admin',
-				password: '123456',
-				code: '1234',
+				account: '', // 账号
+				password: '', // 密码
+				code: '', // 验证码
+				codeId: '', // 验证码ID
 			},
 			time: {
 				txt: '',
 				fun: null,
+			},
+
+			// 验证码信息
+			verificationInfo: {
+				loading: false, // 是否加载中
+				src: null, // 验证码路径
 			},
 		};
 	},
@@ -120,6 +140,7 @@ export default {
 	},
 	created() {
 		this.initTime();
+		this.getVerificationCode();
 	},
 	mounted() {
 		this.initRandomQuotations();
@@ -137,48 +158,109 @@ export default {
 			}, 1000);
 		},
 		// 登录按钮点击
-		submitForm() {
+		async submitForm() {
+			if (this.submit.loading || this.verifyParameters()) {
+				return;
+			}
+
 			this.submit.loading = true;
+
+			let res = null;
+			//const publicKey = `0484C7466D950E120E5ECE5DD85D0C90EAA85081A3A2BD7C57AE6DC822EFCCBD66620C67B0103FC8DD280E36C3B282977B722AAEC3C56518EDCEBAFB72C5A05312`;
+			//const password = sm2.doEncrypt(this.ruleForm.password, publicKey, 1);
+			try {
+				res = await login({...this.ruleForm, password: md5(this.ruleForm.password)});
+			} catch (err) {
+				this.$message.error(err);
+				this.submit.loading = false;
+				return;
+			}
+
+			this.submit.loading = false;
+
+			let defaultRoles = [];
+			let defaultAuthBtnList = [];
+			// admin 页面权限标识，对应路由 meta.roles
+			let adminRoles = ['admin'];
+			// admin 按钮权限标识
+			let adminAuthBtnList = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
+
+			// common 页面权限标识，对应路由 meta.roles
+			let testAuthPageList = ['common'];
+			// test 按钮权限标识
+			let testAuthBtnList = ['btn.add', 'btn.link'];
+
+			// 判断是否是管理员
+			if (this.ruleForm.account === 'admin') {
+				defaultRoles = adminRoles;
+				defaultAuthBtnList = adminAuthBtnList;
+			} else {
+				defaultRoles = testAuthPageList;
+				defaultAuthBtnList = testAuthBtnList;
+			};
+
+			// 用户信息
+			const userInfos = {
+				userName: this.ruleForm.account === 'admin' ? 'admin' : 'test',
+				photo:
+					this.ruleForm.account === 'admin'
+						? 'https://img0.baidu.com/it/u=1833472230,3849481738&fm=253&fmt=auto?w=200&h=200'
+						: 'https://img2.baidu.com/it/u=2187913762,2708298335&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
+				time: new Date().getTime(),
+				roles: defaultRoles,
+				authBtnList: defaultAuthBtnList,
+			};
+
+			// 存储 token 到浏览器缓存
+			Session.set('token', res.result.accessToken/* Math.random().toString(36).substr(0) */);
+			// 存储用户信息到浏览器缓存
+			Session.set('userInfo', userInfos);
+			// 存储用户信息到vuex
+			this.$store.dispatch('userInfos/setUserInfos', userInfos);
+			PrevLoading.start(); // 加载页面
+			this.$router.push('/'); // 跳转进首页
 			setTimeout(() => {
-				let defaultRoles = [];
-				let defaultAuthBtnList = [];
-				// admin 页面权限标识，对应路由 meta.roles
-				let adminRoles = ['admin'];
-				// admin 按钮权限标识
-				let adminAuthBtnList = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-				// common 页面权限标识，对应路由 meta.roles
-				let testAuthPageList = ['common'];
-				// test 按钮权限标识
-				let testAuthBtnList = ['btn.add', 'btn.link'];
-				if (this.ruleForm.userName === 'admin') {
-					defaultRoles = adminRoles;
-					defaultAuthBtnList = adminAuthBtnList;
-				} else {
-					defaultRoles = testAuthPageList;
-					defaultAuthBtnList = testAuthBtnList;
-				}
-				const userInfos = {
-					userName: this.ruleForm.userName === 'admin' ? 'admin' : 'test',
-					photo:
-						this.ruleForm.userName === 'admin'
-							? 'https://img0.baidu.com/it/u=1833472230,3849481738&fm=253&fmt=auto?w=200&h=200'
-							: 'https://img2.baidu.com/it/u=2187913762,2708298335&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
-					time: new Date().getTime(),
-					roles: defaultRoles,
-					authBtnList: defaultAuthBtnList,
-				};
-				// 存储 token 到浏览器缓存
-				Session.set('token', Math.random().toString(36).substr(0));
-				// 存储用户信息到浏览器缓存
-				Session.set('userInfo', userInfos);
-				// 存储用户信息到vuex
-				this.$store.dispatch('userInfos/setUserInfos', userInfos);
-				PrevLoading.start();
-				this.$router.push('/');
-				setTimeout(() => {
-					this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
-				}, 300);
+				this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
 			}, 300);
+		},
+
+		// 获取验证码
+		async getVerificationCode() {
+			if (this.verificationInfo.loading) {
+				this.$message({
+					message: '验证码加载中，不能重复操作',
+					type: 'warning',
+				});
+				return;
+			}
+
+			this.verificationInfo.loading = true;
+			const res = await getLoginVerificationCode();
+			this.verificationInfo.loading = false;
+
+			this.verificationInfo.src = res.result.img;
+			this.ruleForm.codeId = res.result.id;
+		},
+
+		// 验证参数
+		verifyParameters() {
+			let tips = null;
+
+			if (!this.ruleForm.account) {
+				tips = '请输入账号';
+			} else if (!this.ruleForm.password) {
+				tips = '请输入密码';
+			} else if (!this.ruleForm.code) {
+				tips = '请输入验证码';
+			}
+
+			tips &&
+				this.$message({
+					message: tips,
+					type: 'warning',
+				});
+
+			return !!tips;
 		},
 	},
 	destroyed() {

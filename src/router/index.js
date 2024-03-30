@@ -59,7 +59,7 @@ const dynamicRoutes = [{
 					isKeepAlive: true,
 					isAffix: true,
 					isIframe: false,
-					roles: ["admin", "common"],
+					roles: ["admin"],
 					icon: "el-icon-s-ticket"
 				}
 			},
@@ -152,6 +152,54 @@ const dynamicRoutes = [{
 							roles: ["admin", "common"],
 
 						},
+					}
+				]
+			},
+			{
+				path: '/systemManagement',
+				name: "systemManagement",
+				component: "layout/routerView/parent",
+				redirect: "/systemManagement/accountManagement",
+				meta: {
+					title: "message.router.systemManagement",
+					isLink: "",
+					isHide: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: false,
+					roles: ["admin"],
+					icon: "el-icon-s-tools"
+				},
+				children: [
+					{
+						path: '/systemManagement/accountManagement',
+						name: "accountManagement",
+						component: "systemManagement/accountManagement",
+						meta: {
+							title: "message.router.accountManagement",
+							isLink: "",
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: true,
+							isIframe: false,
+							roles: ["admin"],
+							icon: ""
+						}
+					},
+					{
+						path: '/systemManagement/roleManagement',
+						name: "roleManagement",
+						component: "systemManagement/roleManagement",
+						meta: {
+							title: "message.router.roleManagement",
+							isLink: "",
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: true,
+							isIframe: false,
+							roles: ["admin"],
+							icon: ""
+						}
 					}
 				]
 			}
@@ -290,9 +338,9 @@ export function setCacheTagsViewRoutes(arr) {
 	// 先处理有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
 	let rolesRoutes = setFilterMenuFun(arr, store.state.userInfos.userInfos.roles);
 
-
 	// 添加到 vuex setTagsViewRoutes 中
 	store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes)));
+
 }
 
 // 递归处理多余的 layout : <router-view>，让需要访问的组件保持在第一层 layout 层。
@@ -375,7 +423,6 @@ export async function adminUser(router, to, next) {
 
 		const awaitRoute = await dynamicRouter(dynamicRoutes); // 递归路由配置
 
-		console.log(awaitRoute, '=============');
 
 		[...awaitRoute, {
 			path: '*',
@@ -391,6 +438,7 @@ export async function adminUser(router, to, next) {
 		//setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 
 		setCacheTagsViewRoutes(JSON.parse(JSON.stringify(dynamicRoutes[0].children)));
+
 		next({
 			...to,
 			replace: true
@@ -406,31 +454,37 @@ export async function adminUser(router, to, next) {
 
 // 添加路由，模拟数据与方法，可自行进行修改 test
 // 添加动态路由，`{ path: '*', redirect: '/404' }` 防止页面刷新，静态路由丢失问题
-export function testUser(router, to, next) {
-	resetRouter();
-	menuApi
-		.getMenuTest()
-		.then(async (res) => {
-			// 读取用户信息，获取对应权限进行判断
-			store.dispatch('userInfos/setUserInfos');
-			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
-			//dynamicRoutes[0].children = res.data;
-			//const awaitRoute = await dynamicRouter(dynamicRoutes);
-			[...awaitRoute, {
-				path: '*',
-				redirect: '/404'
-			}].forEach((route) => {
-				router.addRoute({
-					...route
-				});
+export async function testUser(router, to, next) {
+	resetRouter(); // 重置路由信息
+
+	try {
+		//const res = await menuApi.getMenuTest();
+		// 读取用户信息，获取对应权限进行判断
+		store.dispatch('userInfos/setUserInfos');
+		store.dispatch('routesList/setRoutesList', setFilterMenuFun(dynamicRoutes[0].children, store.state.userInfos.userInfos.roles));
+		//dynamicRoutes[0].children = res.data;
+		const awaitRoute = await dynamicRouter(dynamicRoutes);
+
+		[...awaitRoute, {
+			path: '*',
+			redirect: '/404'
+		}].forEach((route) => {
+			router.addRoute({
+				...route
 			});
-			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
-			next({
-				...to,
-				replace: true
-			});
-		})
-		.catch(() => {});
+		});
+		setCacheTagsViewRoutes(JSON.parse(JSON.stringify(dynamicRoutes[0].children)));
+
+
+		next({
+			...to,
+			replace: true
+		});
+
+	} catch (err) {
+
+	}
+
 }
 
 // 重置路由
@@ -462,14 +516,18 @@ export function getRouterList(router, to, next) {
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
+
 	keepAliveSplice(to);
 	NProgress.configure({
 		showSpinner: false
 	});
+
+
 	if (to.meta.title && to.path !== '/login') {
 		NProgress.start();
 	};
 	let token = Session.get('token'); // 获取令牌
+
 	if (to.path === '/login' && !token) {
 		NProgress.start();
 		next();
@@ -480,15 +538,18 @@ router.beforeEach((to, from, next) => {
 		if (!token) {
 			NProgress.start();
 			next('/login');
-			Session.clear();
+			Session.clear(); // 清空缓存
 			delayNProgressDone();
 		} else if (token && to.path === '/login') {
 			next('/home');
 			delayNProgressDone();
 		} else {
+
 			if (Object.keys(store.state.routesList.routesList).length <= 0) {
+
 				getRouterList(router, to, next);
 			} else {
+
 				next();
 				delayNProgressDone(0); // 关闭进度条
 			}

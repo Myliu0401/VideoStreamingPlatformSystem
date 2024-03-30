@@ -18,14 +18,23 @@ module.exports = {
 					'^/gitee': '',
 				},
 			},
+
+			'/api': {
+				target: 'http://120.25.172.200:5005',
+				ws: true,
+				changeOrigin: true
+			}
 		},
 	},
 	chainWebpack(config) {
 		// 移除打包后 index.html 所有打包好的文件都预加载行为
 		config.plugins.delete('preload');
 		config.plugins.delete('prefetch');
+		
 	},
 	css: {
 		extract: { ignoreOrder: true },
 	},
+	
+	
 };
