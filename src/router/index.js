@@ -213,11 +213,7 @@ const staticRoutes = [{
 const createRouter = () =>
 	new VueRouter({
 		routes: staticRoutes,
-		exact: true,
-		pathToRegexpOptions: {
-			strict: true
-		},
-		mode: 'hash'
+		mode: 'history'
 	});
 
 // 创建路由

@@ -583,6 +583,6 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-@import url(./index.scss);
+<style scoped lang="scss">
+@import './index.scss';
 </style>

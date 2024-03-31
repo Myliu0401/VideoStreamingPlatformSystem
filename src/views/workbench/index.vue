@@ -4,8 +4,8 @@
             <h1 class="title">可视化大屏</h1>
 
             <div class="arrows" @click="$router.replace('/visualLargeScreen')">
-                <img class="arrow" src="../../assets/workbench/right.png"></img>
-                <img class="arrow"  src="../../assets/workbench/right.png"></img>
+                <!-- <img class="arrow" src="../../assets/workbench/right.png"></img>
+                <img class="arrow" src="../../assets/workbench/right.png"></img> -->
             </div>
         </div>
 
@@ -13,49 +13,49 @@
         <div class="items" v-for="num in 2" :key="num">
             <h4 class="title">设备数据</h4>
             <ul class="content">
-               <li class="content_li">
-                <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/1.png"/>
-                </div>
-                
-                <div class="li_div">
-                    <span class="num">88</span>
-                    <span class="text">设备总数</span>
-                </div>
-               </li>
+                <li class="content_li">
+                    <div class="li_left">
+                       <!--  <img class="li_img" src="../../assets/workbench/1.png" /> -->
+                    </div>
 
-               <li class="content_li">
-                <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/2.png"/>
-                </div>
-                
-                <div class="li_div">
-                    <span class="num">88</span>
-                    <span class="text">设备总数</span>
-                </div>
-               </li>
+                    <div class="li_div">
+                        <span class="num">88</span>
+                        <span class="text">设备总数</span>
+                    </div>
+                </li>
 
-               <li class="content_li">
-                <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/3.png"/>
-                </div>
-                
-                <div class="li_div">
-                    <span class="num">88</span>
-                    <span class="text">设备总数</span>
-                </div>
-               </li>
+                <li class="content_li">
+                    <div class="li_left">
+                        <!-- <img class="li_img" src="../../assets/workbench/2.png" /> -->
+                    </div>
 
-               <li class="content_li">
-                <div class="li_left">
-                    <img class="li_img" src="../../assets/workbench/4.png"/>
-                </div>
-                
-                <div class="li_div">
-                    <span class="num">88</span>
-                    <span class="text">设备总数</span>
-                </div>
-               </li>
+                    <div class="li_div">
+                        <span class="num">88</span>
+                        <span class="text">设备总数</span>
+                    </div>
+                </li>
+
+                <li class="content_li">
+                    <div class="li_left">
+                        <!-- <img class="li_img" src="../../assets/workbench/3.png" /> -->
+                    </div>
+
+                    <div class="li_div">
+                        <span class="num">88</span>
+                        <span class="text">设备总数</span>
+                    </div>
+                </li>
+
+                <li class="content_li">
+                    <div class="li_left">
+                        <!-- <img class="li_img" src="../../assets/workbench/4.png" /> -->
+                    </div>
+
+                    <div class="li_div">
+                        <span class="num">88</span>
+                        <span class="text">设备总数</span>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -64,22 +64,22 @@
 
 <script>
 export default {
-    data(){
+    data() {
         return {
 
         }
     },
 
-    created(){
+    created() {
         window.aa = this
     },
-    methods:{
-           
+    methods: {
+
     }
 }
 </script>
 
 
-<style lang="scss" scoped>
-  @import url(./index.scss);
+<style scoped lang="scss">
+@import './index.scss';
 </style>

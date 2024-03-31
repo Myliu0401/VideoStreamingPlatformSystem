@@ -5,6 +5,7 @@
 
 <script>
 import mapData from '../mapData.js'; // 地图数据
+
 const x = 10;
 const y = 25;
 export default {
@@ -330,7 +331,7 @@ export default {
 	height: 100%;
 	background-position-y: bottom;
 	background-position-x: center;
-	background-image: url(../../../assets/visualLargeScreen/地图底盘.png);
+	background-image: url(src/assets/img/地图底盘.png);
 	background-repeat: no-repeat;
 	transform: rotateX(31deg);
 }
